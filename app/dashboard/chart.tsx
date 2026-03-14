@@ -43,7 +43,7 @@ export default function Chart({ products }: { products: any[] }) {
       },
       title: {
         display: true,
-        text: "Inventory Stock Chart"
+        text: "Stock Distribution by Product"
       }
     }
   };

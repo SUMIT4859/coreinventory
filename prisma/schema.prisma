@@ -17,3 +17,19 @@ model Product {
   location  String
   createdAt DateTime @default(now())
 }
+
+model StockLog {
+  id        Int      @id @default(autoincrement())
+  product   String
+  type      String
+  quantity  Int
+  from      String?
+  to        String?
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+}

@@ -1,96 +1,140 @@
 "use client";
 
-import { useEffect,useState } from "react";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Chart from "./chart";
 
-export default function Dashboard(){
+export default function Dashboard() {
 
-  const [products,setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
+  const [logs, setLogs] = useState<any[]>([]);
+  const [receipts, setReceipts] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
+
     fetch("/api/products")
-      .then(res=>res.json())
-      .then(data=>setProducts(data));
-  },[]);
+      .then(res => res.json())
+      .then(data => setProducts(data));
+
+    fetch("/api/history")
+      .then(res => res.json())
+      .then(data => setLogs(data));
+
+
+
+    fetch("/api/receipts")
+      .then(res => res.json())
+      .then(data => setReceipts(data));
+
+    fetch("/api/deliveries")
+      .then(res => res.json())
+      .then(data => setDeliveries(data));
+
+  }, []);
 
   const totalProducts = products.length;
 
   const totalStock = products.reduce(
-    (sum,p)=>sum + p.stock,
+    (sum, p) => sum + p.stock,
     0
   );
 
   const lowStockProducts = products.filter(
-    p=>p.stock <5
+    p => p.stock < 5
   );
 
-  const lowStock = lowStockProducts.length;
-
-  return(
+  return (
 
     <div>
 
       <h1>Inventory Dashboard</h1>
 
-      {/* DASHBOARD CARDS */}
-
       <div style={{
-        display:"grid",
-        gridTemplateColumns:"repeat(3,1fr)",
-        gap:20,
-        marginTop:20
+        display: "flex",
+        gap: 20,
+        marginTop: 20
       }}>
 
         <div style={{
-          background:"#4CAF50",
-          color:"white",
-          padding:25,
-          borderRadius:8
+          background: "#4CAF50",
+          color: "white",
+          padding: 20,
+          width: 200,
+          borderRadius: 8
         }}>
           <h3>Total Products</h3>
-          <h2>{totalProducts}</h2>
+          <p>{totalProducts}</p>
         </div>
 
         <div style={{
-          background:"#2196F3",
-          color:"white",
-          padding:25,
-          borderRadius:8
+          background: "#2196F3",
+          color: "white",
+          padding: 20,
+          width: 200,
+          borderRadius: 8
         }}>
           <h3>Total Stock</h3>
-          <h2>{totalStock}</h2>
+          <p>{totalStock}</p>
         </div>
 
         <div style={{
-          background:"#f44336",
-          color:"white",
-          padding:25,
-          borderRadius:8
+          background: "#f44336",
+          color: "white",
+          padding: 20,
+          width: 200,
+          borderRadius: 8
         }}>
           <h3>Low Stock</h3>
-          <h2>{lowStock}</h2>
+          <p>{lowStockProducts.length}</p>
         </div>
+
+
+
+        <div style={{
+          background: "#ff9800",
+          color: "white",
+          padding: 20,
+          width: 200,
+          borderRadius: 8
+        }}>
+          <h3>Pending Receipts</h3>
+          <p>{receipts.length}</p>
+        </div>
+
+
+        <div style={{
+          background: "#9c27b0",
+          color: "white",
+          padding: 20,
+          width: 200,
+          borderRadius: 8
+        }}>
+          <h3>Pending Deliveries</h3>
+          <p>{deliveries.length}</p>
+        </div>
+
+
+
 
       </div>
 
 
-      {/* LOW STOCK ALERT */}
-
-      {lowStock > 0 && (
+      {lowStockProducts.length > 0 && (
 
         <div style={{
-          marginTop:30,
-          background:"#ffe5e5",
-          padding:15,
-          borderRadius:6,
-          color:"#c62828"
+          background: "#fdecea",
+          padding: 20,
+          marginTop: 30,
+          borderRadius: 8
         }}>
 
-          ⚠ Low stock products:
+          <h3>⚠ Low stock products:</h3>
 
           <ul>
 
-            {lowStockProducts.map((p:any)=>(
+            {lowStockProducts.map(p => (
               <li key={p.id}>
                 {p.name} (stock: {p.stock})
               </li>
@@ -103,37 +147,42 @@ export default function Dashboard(){
       )}
 
 
-      {/* CHART */}
-
-      <div style={{marginTop:40}}>
-        <Chart products={products}/>
+      <div style={{ marginTop: 40 }}>
+        <Chart products={products} />
       </div>
 
 
-      {/* RECENT ACTIVITY */}
-
-      <div style={{marginTop:40}}>
+      <div style={{ marginTop: 40 }}>
 
         <h2>Recent Activity</h2>
 
-        <div style={{
-          background:"white",
-          padding:20,
-          borderRadius:6,
-          width:500
-        }}>
+        <table border={1} cellPadding={10}>
 
-          <ul>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Type</th>
+              <th>Quantity</th>
+              <th>Date</th>
+            </tr>
+          </thead>
 
-            {products.slice(0,5).map((p:any)=>(
-              <li key={p.id} style={{marginBottom:10}}>
-                {p.name} stock is {p.stock}
-              </li>
+          <tbody>
+
+            {logs.slice(0, 5).map((log: any) => (
+              <tr key={log.id}>
+                <td>{log.product}</td>
+                <td>{log.type}</td>
+                <td>{log.quantity}</td>
+                <td>
+                  {new Date(log.createdAt).toLocaleString()}
+                </td>
+              </tr>
             ))}
 
-          </ul>
+          </tbody>
 
-        </div>
+        </table>
 
       </div>
 
