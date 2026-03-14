@@ -57,21 +57,59 @@ Charts
 coreinventory
 │
 ├── app
+│   ├── api
+│   │   ├── login
+│   │   │   └── route.ts
+│   │   ├── products
+│   │   │   └── route.ts
+│   │   ├── receipts
+│   │   │   └── route.ts
+│   │   ├── deliveries
+│   │   │   └── route.ts
+│   │   ├── adjustments
+│   │   │   └── route.ts
+│   │   ├── transfers
+│   │   │   └── route.ts
+│   │   └── history
+│   │       └── route.ts
+│   │
 │   ├── dashboard
+│   │   ├── page.tsx
+│   │   └── chart.tsx
+│   │
 │   ├── products
+│   │   └── page.tsx
+│   │
 │   ├── receipts
+│   │   └── page.tsx
+│   │
 │   ├── deliveries
-│   ├── transfers
+│   │   └── page.tsx
+│   │
 │   ├── adjustments
+│   │   └── page.tsx
+│   │
+│   ├── transfers
+│   │   └── page.tsx
+│   │
 │   ├── history
-│   └── api
-│
-├── prisma
-│   └── schema.prisma
+│   │   └── page.tsx
+│   │
+│   ├── components
+│   │   ├── LogoutButton.tsx
+│   │   └── AuthGuard.tsx
+│   │
+│   ├── layout.tsx
+│   ├── globals.css
+│   └── page.tsx   (login page)
 │
 ├── lib
 │   └── prisma.ts
 │
+├── prisma
+│   └── schema.prisma
+│
+├── package.json
 └── README.md
 ```
 
