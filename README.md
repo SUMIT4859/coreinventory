@@ -1,35 +1,174 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CoreInventory – Inventory Management System
 
-## Getting Started
+CoreInventory is a simple web-based Inventory Management System built with **Next.js, PostgreSQL, and Prisma**.
+It helps manage products, stock movement, and inventory operations inside a warehouse.
 
-First, run the development server:
+This project was created as a **hackathon project** to demonstrate a modular inventory system with real-time stock updates and activity tracking.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Features
+
+* User Login
+* Dashboard with inventory statistics
+* Product Management (Add / Edit / Delete)
+* Incoming Receipts (Stock In)
+* Delivery Orders (Stock Out)
+* Internal Transfers between locations
+* Inventory Adjustments
+* Stock History / Activity Log
+* Low Stock Alerts
+* Inventory Charts
+* CSV Export
+* Search Products
+
+All stock operations automatically update inventory and create logs in the system.
+
+---
+
+## Tech Stack
+
+Frontend
+
+* Next.js
+* React
+
+Backend
+
+* Next.js API Routes
+
+Database
+
+* PostgreSQL
+
+ORM
+
+* Prisma
+
+Charts
+
+* Chart.js
+
+---
+
+## Project Structure
+
+```
+coreinventory
+│
+├── app
+│   ├── dashboard
+│   ├── products
+│   ├── receipts
+│   ├── deliveries
+│   ├── transfers
+│   ├── adjustments
+│   ├── history
+│   └── api
+│
+├── prisma
+│   └── schema.prisma
+│
+├── lib
+│   └── prisma.ts
+│
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Clone the repository
 
-## Learn More
+```
+git clone https://github.com/SUMIT4859/coreinventory.git
+```
 
-To learn more about Next.js, take a look at the following resources:
+Go to the project folder
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+cd coreinventory
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Install dependencies
 
-## Deploy on Vercel
+```
+npm install
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
+## Setup Database
+
+Create a PostgreSQL database.
+
+Example database URL in `.env` file:
+
+```
+DATABASE_URL="postgresql://postgres:password@localhost:5432/coreinventory"
+```
+
+Run Prisma migration
+
+```
+npx prisma migrate dev
+```
+
+Generate Prisma client
+
+```
+npx prisma generate
+```
+
+---
+
+## Run the Project
+
+Start the development server
+
+```
+npm run dev
+```
+
+Open in browser
+
+```
+http://localhost:3000
+```
+
+---
+
+## Demo Workflow
+
+1. Login to the system
+2. Add products
+3. Create receipts to increase stock
+4. Create delivery orders to decrease stock
+5. Transfer stock between locations
+6. Make inventory adjustments
+7. View all stock movement in **Stock History**
+8. Check dashboard analytics and charts
+
+---
+
+## Example Dashboard Metrics
+
+* Total Products
+* Total Stock
+* Low Stock Alerts
+* Pending Receipts
+* Pending Deliveries
+* Inventory Chart
+
+---
+
+## Author
+
+Sumit Kumar Pandit
+
+---
+
+## License
+
+This project is for educational and demonstration purposes.
